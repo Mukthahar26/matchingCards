@@ -1,3 +1,7 @@
-global.difficultyMode = ""
-global.levelRatingsData =[]
-global.isVibrationOn= true
+
+export default global={
+    difficultyMode: "",
+    isLevelrequiredLoading: true,
+    isVibrationOn: true
+}
+

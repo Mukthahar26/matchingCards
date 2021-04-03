@@ -1,5 +1,5 @@
 var SQLite = require('react-native-sqlite-storage')
-
+import global from './../global'
 
 
 
@@ -47,9 +47,8 @@ const insertRating = async (p) => {
                         for (let i = 0; i < rows.length; i++) {
                             array.push(rows.item(i));
                         }
-                        global.levelRatingsData = array;
+                        global.isLevelrequiredLoading = true
                         resolve(array);
-                        
                     }, (error) => console.log(error))
                 }, (error) => console.log(error))
             }, (error) => console.log(error))

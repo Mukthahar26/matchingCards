@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import { getGameTime, getNoOfCards} from './../../../util/common'
+
 
 export class Winner extends Component {
 
@@ -27,18 +29,19 @@ export class Winner extends Component {
   
 
     render() {
-      let { level, matchingCount, time } = this.props.route.params
+      let { level, matchingCount, time, star } = this.props.route.params
       let { count } =this.state;
         return (
-            <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container} style={styles.centeredView}>
-              <Animatable.Text animation="rubberBand" easing="ease-out" iterationCount="3" style={[styles.text,styles.winLabel]}>Congratulations</Animatable.Text>
+            <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.centeredView}>
+              { star ? <Animatable.Text animation="rubberBand" easing="ease-out" iterationCount="3" style={[styles.text,styles.winLabel]}>Congratulations</Animatable.Text> 
+              : <Text style={[styles.text,styles.winLabel,{color: 'red'}]}>Sorry, you loss</Text>}
               <View style={styles.rowContainer}>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
                 <CustomizedStarRating
-                noOfStars={'3'}
+                noOfStars={3}
                 starRowStyle={styles.starRowStyle}
                 starSizeStyle={styles.starSizeStyle}
-                selectedStar={2}
+                selectedStar={star}
                 starAnimationScale={2.15}
                 animationDuration={1000} 
                 easingType={Easing.easeInCirc}
@@ -51,27 +54,31 @@ export class Winner extends Component {
             
             {count>=1 ?<View style={styles.row}>
               <Text style={styles.text}>Time</Text>
-              <Text style={styles.text}>00:20</Text>
+              <Text style={styles.text}>{time}sec</Text>
             </View> : null}
             {count>=2 ?<View style={styles.row}>
               <Text style={styles.text}>Stars</Text>
-              <Text style={styles.text}>2</Text>
+              <Text style={styles.text}>{star}</Text>
             </View> : null}
             {count>=3 ? <View style={styles.row}>
               <Text style={styles.text}>Matches</Text>
-              <Text style={styles.text}>10/10</Text>
+              <Text style={styles.text}>{matchingCount+"/"+matchingCount}</Text>
             </View> : null}
             </View>
             {count>=4 ? <Animatable.View style={{width: '60%', alignItems:'center', flexDirection:'row', justifyContent: 'space-between'}} animation="rubberBand" easing="ease-out" iterationCount="1">
             <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('levels')}>
             <MaterialIcons name="apps" size={wp("5%")} color="#FFF" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={()=> {}}>
+          <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('game',{level: level})}>
             <Icon name="reload1" size={wp("5%")} color="#FFF" />
           </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('game',{level: level+1})}>
+              {star ? <TouchableOpacity style={styles.button} onPress={()=>{
+                let cards = getGameTime(level+1);
+                let time = getNoOfCards(level+1);
+                this.props.navigation.navigate('game',{level: level+1, cards,time})
+                }}>
               <Entypo name="chevron-small-right" size={wp("5%")} color="#FFF" />
-          </TouchableOpacity>
+          </TouchableOpacity> : null}
           
             </Animatable.View> : null}
             </LinearGradient>
@@ -82,7 +89,7 @@ export class Winner extends Component {
 const styles= StyleSheet.create({
     centeredView: {
         flex: 1,
-        paddingTop: hp("30%"),
+        paddingTop: hp("25%"),
         alignItems: "center",
         backgroundColor: '#27282b'
       },

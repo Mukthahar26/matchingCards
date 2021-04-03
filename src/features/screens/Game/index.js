@@ -12,7 +12,7 @@ export class Game extends Component {
     constructor(props){
         super(props);
         this.state={
-            timer:TIME,
+            timer:this.props.route.params.time,
             minutes: 0,
             seconds: 0,
             flippedId: -1,
@@ -28,7 +28,7 @@ export class Game extends Component {
     componentDidMount(){
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
             this.setState({
-                timer:TIME,
+                timer:this.props.route.params.time,
                 minutes: 0,
                 seconds: 0,
                 flippedId: -1,
@@ -38,9 +38,10 @@ export class Game extends Component {
                 isSettingsVisible: false,
                 isWinnerVisible: true
             })
+            let cards = this.props.route.params.cards
             let arr = shuffle(IMAGES());
-            let a = JSON.parse(JSON.stringify(arr.slice(0,10)))
-            let b = JSON.parse(JSON.stringify(arr.slice(0,10)))
+            let a = JSON.parse(JSON.stringify(arr.slice(0,cards)))
+            let b = JSON.parse(JSON.stringify(arr.slice(0, cards)))
             let all = [...a, ...b]
         
             this.setState({ gameImages: shuffle(all)})
@@ -49,8 +50,10 @@ export class Game extends Component {
     }
 
     setTimer=()=>{
+        let { level, time } = this.props.route.params
         this.timer = setInterval(()=> {
             if(this.state.timer===0){
+                this.props.navigation.navigate('winner',{level, star:0, matchingCount: this.state.matchingCount, time })
                 clearInterval(this.timer)
             }
             var minutes = Math.floor(this.state.timer / 60);
@@ -64,8 +67,8 @@ export class Game extends Component {
     }
 
     flipped=(id, index)=>{
-        let { flippedId, gameImages, lastClickedIndex, matchingCount, minutes, seconds } = this.state;
-        let { level } = this.props.route.params
+        let { flippedId, gameImages, lastClickedIndex, matchingCount, timer, minutes, seconds } = this.state;
+        let { level, cards } = this.props.route.params
         let temp = [...gameImages];
         
         Vibration.vibrate(50,500,50)
@@ -74,11 +77,23 @@ export class Game extends Component {
             if(flippedId!==-1 && lastClickedIndex!==index){
                 if(flippedId===id){
                     this.setState({ matchingCount: matchingCount+1, flippedId: -1, lastClickedIndex: -1, gameImages: temp },()=>{
-                        console.log("sssssssssssssssss :", this.state.matchingCount)
-                        if(this.state.matchingCount===10){
-                            insertRating({star:3, level})
+                        if(this.state.matchingCount===cards){
+                            let star = Math.floor(TIME/(TIME-timer));
+                            insertRating({star, level})
                             clearInterval(this.timer)
-                            this.props.navigation.navigate('winner',{level, matchingCount: this.state.matchingCount, time: minutes +":"+seconds })
+                            this.props.navigation.navigate('winner',{level, star, matchingCount: this.state.matchingCount, time: TIME-timer })
+                            
+                            this.setState({
+                                timer:TIME,
+                                minutes: 0,
+                                seconds: 0,
+                                flippedId: -1,
+                                gameImages:[],
+                                lastClickedIndex: -1,
+                                matchingCount: 0,
+                                isSettingsVisible: false,
+                                isWinnerVisible: true
+                            })
                         }
                     })
                 }else{
@@ -94,7 +109,7 @@ export class Game extends Component {
 
     render() {
         let { timer, gameImages, matchingCount, isSettingsVisible, isWinnerVisible, minutes, seconds } = this.state;
-        let level = this.props.route.params.level
+        let {level, cards} = this.props.route.params
         console.log("gameImages ", isSettingsVisible, isWinnerVisible, matchingCount, level)
     
         return (
@@ -113,7 +128,7 @@ export class Game extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={{marginTop: hp("2%")}}>Matches: {matchingCount}</Text>
+                        <Text style={{marginTop: hp("2%")}}>Matches: {matchingCount+"/"+cards}</Text>
                     </View>
                 </View>
                 <View style={{flex:90}}>
@@ -122,7 +137,7 @@ export class Game extends Component {
                         numColumns={5}
                         columnWrapperStyle={{flex:1, justifyContent:'center', marginBottom:wp("1.5%")}}
                         renderItem={({item, index})=>
-                        !item.isOpen ? <TouchableOpacity activeOpacity={1} style={{flex:1, justifyContent:'space-between', alignSelf:'center'}} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="contain" source={require("./../../../assets/balbblack.png")} /></TouchableOpacity> : <TouchableOpacity activeOpacity={1} style={{flex:1, justifyContent:'space-between', alignSelf:'center'}} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="center" source={{uri: item.image}} /></TouchableOpacity>
+                        !item.isOpen ? <TouchableOpacity style={styles.cardbtn} activeOpacity={1} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="contain" source={require("./../../../assets/heartcard.jpg")} /></TouchableOpacity> : <TouchableOpacity activeOpacity={1} style={{...styles.cardbtn, backgroundColor:'white'}} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="center" source={{uri: item.image}} /></TouchableOpacity>
                     }
                         keyExtractor={(item,index)=> index.toString()}
                     />
@@ -141,13 +156,13 @@ const styles= StyleSheet.create({
     cardContainer:{
         flex:1
     },
-    card:{
-        height: 100,
-        width:"100%",
+    cardbtn:{
+        flex: 1,
+        alignItems:'center'
     },
     image:{
-        height: hp("13%"),
-        width: hp("13%")
+        height: hp("9%"),
+        width: hp("9%")
     },
     face:{
         backgroundColor:'red'

@@ -3,8 +3,7 @@ import { Text, View, Appearance, StyleSheet, TouchableOpacity, TouchableHighligh
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as Animatable from 'react-native-animatable';
-import { getRatings } from './../../../dbOperations'
-
+import global from './../../../global'
 const colorScheme = Appearance.getColorScheme();
 
 
@@ -19,20 +18,20 @@ export class DifficultyMode extends Component {
     constructor(props){
         super(props);
         this.state={
-            btnanimation: ""
+            easyAnimation: "",
+            normalAnimation: "",
+            hardAnimation: "",
+            veryHardAnimation: "",
         }
-        this.getRatings();
-    }
-
-    getRatings=async()=>{
-        let rows =await getRatings();
-        global.levelRatingsData = rows;
     }
 
     componentDidMount(){
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
             this.setState({
-                btnanimation:""
+                easyAnimation: "",
+                normalAnimation: "",
+                hardAnimation: "",
+                veryHardAnimation: "",
             })
           });
     }
@@ -41,31 +40,38 @@ export class DifficultyMode extends Component {
         this.unsubscribe()
     }
 
+    goToLevel=async(mode)=>{
+        if(mode===EASY) this.setState({easyAnimation: "bounceIn"});
+        if(mode===NORMAL) this.setState({normalAnimation: "bounceIn"});
+        if(mode===HARD) this.setState({hardAnimation: "bounceIn"});
+        if(mode===VERYHARD) this.setState({veryHardAnimation: "bounceIn"});
+        
+        setTimeout(()=> this.props.navigation.navigate('levels',{mode}),400)
+        
+    }
+
     render() {
+        let { easyAnimation, normalAnimation, hardAnimation, veryHardAnimation } = this.state;
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
                 <Animatable.Text animation="flipInY" style={styles.title}>Difficulty Mode</Animatable.Text>
-                <TouchableOpacity style={{width:'80%'}}  onPress={()=>{
-                    global.difficultyMode = EASY;
-                    this.setState({btnanimation: "bounceIn"});
-                    setTimeout(()=> this.props.navigation.navigate('levels'),400)
-                }} >
-                    <Animatable.View animation={this.state.btnanimation} style={styles.button}>
+                <TouchableOpacity style={{width:'80%'}}  onPress={()=>this.goToLevel(EASY) } >
+                    <Animatable.View animation={easyAnimation} style={styles.button}>
                         <Text style={styles.btnText}>Easy</Text>
-                    </Animatable.View>    
+                    </Animatable.View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.setState({btnanimation: "bounceIn"})} >
-                    <Animatable.View animation={this.state.btnanimation} style={styles.button}>
+                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.goToLevel(NORMAL) } >
+                    <Animatable.View animation={normalAnimation} style={styles.button}>
                         <Text style={styles.btnText}>Normal</Text>
                     </Animatable.View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.setState({btnanimation: "bounceIn"})} >
-                    <Animatable.View animation={this.state.btnanimation} style={styles.button}>
+                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.goToLevel(HARD) } >
+                    <Animatable.View animation={hardAnimation} style={styles.button}>
                         <Text style={styles.btnText}>Hard</Text>
-                    </Animatable.View>    
+                    </Animatable.View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.setState({btnanimation: "bounceIn"})} >
-                    <Animatable.View animation={this.state.btnanimation} style={styles.button}>
+                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.goToLevel(VERYHARD) }>
+                    <Animatable.View animation={veryHardAnimation} style={styles.button}>
                         <Text style={styles.btnText}>Very Hard</Text>
                     </Animatable.View>    
                 </TouchableOpacity>

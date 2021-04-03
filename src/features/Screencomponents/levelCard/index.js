@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Easing, Image, requireNativeComponent } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-//import CustomizedStarRating from 'react-native-customized-star-rating';
+import { getGameTime, getNoOfCards} from './../../../util/common'
 import StarRating from 'react-native-star-rating';
 export class LevelCard extends Component {
     render() {
         let { level, isComplete, stars, isUnlocked, navigation } = this.props;
         return (
-            <TouchableOpacity onPress={()=> isUnlocked && navigation.navigate("game",{level})} activeOpacity={0.8} style={styles.container}>
+            <TouchableOpacity onPress={()=>{
+                let time = getGameTime(level);
+                let cards = getNoOfCards(level);
+                isUnlocked && navigation.navigate("game",{level, cards, time})
+            }} activeOpacity={0.8} style={styles.container}>
                 <View style={styles.circle}>
                     { isUnlocked ? <Text style={styles.levelNumber}>{level}</Text> : <Image resizeMode="contain" source={require("./../../../assets/yellowlock.png")} />}
                     
