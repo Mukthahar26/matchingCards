@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image, Vibration } from 'react-native'
-import { GameInstructions, FlipCard, Settings, Winner } from './../../Screencomponents'
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image, Vibration, BackHandler, Alert } from 'react-native'
+import { Settings } from './../../Screencomponents'
 import Icon from 'react-native-vector-icons/Feather';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,6 +26,7 @@ export class Game extends Component {
     }
 
     componentDidMount(){
+        BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
             this.setState({
                 timer:this.props.route.params.time,
@@ -63,14 +64,28 @@ export class Game extends Component {
     }
 
     componentWillUnmount(){
+        BackHandler.removeEventListener("hardwareBackPress", this.backAction);
         this.unsubscribe();
     }
+
+    backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to exit from the game?", [
+          {
+            text: "No",
+            onPress: () => null,
+            style: "No"
+          },
+          { text: "YES", onPress: () => this.props.navigation.goBack(null) }
+        ]);
+        return true;
+      };
+    
 
     flipped=(id, index)=>{
         let { flippedId, gameImages, lastClickedIndex, matchingCount, timer, minutes, seconds } = this.state;
         let { level, cards } = this.props.route.params
         let temp = [...gameImages];
-        
+        console.log("oooooooooooooooooooo :",global.difficultyMode)
         Vibration.vibrate(50,500,50)
         if(!temp[index].isOpen){
             temp[index].isOpen = true

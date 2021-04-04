@@ -1,7 +1,6 @@
 
 export default global={
-    difficultyMode: "",
+    difficultyMode: "EASY",
     isLevelrequiredLoading: true,
     isVibrationOn: true
 }
-

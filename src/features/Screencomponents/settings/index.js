@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Modal, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, Modal, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { GradientSwitch, DarkModeSwitch } from './../../../UIcomponents'

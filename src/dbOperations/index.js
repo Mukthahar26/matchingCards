@@ -1,17 +1,21 @@
 var SQLite = require('react-native-sqlite-storage')
-import global from './../global'
 
 
+const getTableByMode=()=>{
+    if(global.difficultyMode==="EASY") return "easyModeLevels"
+    else if(global.difficultyMode==="NORMAL") return "normalModeLevels"
+    else if(global.difficultyMode==="HARD") return "hardModeLevels"
+}
 
 
 const dbConnections = () => {
     const db = SQLite.openDatabase({
-        name: 'matchingCardsDB',
+        name: "matchingCardsDB",
         createFromLocation: 1
     },
         () => { console.log("success") },
         error => {
-            console.log("failed")
+            console.log("failed", error)
         }
     );
     return db;
@@ -21,7 +25,7 @@ const getRatings = async (p) => {
     let db = dbConnections();
     return new Promise((resolve, reject) => {
         db.transaction((txn) => {
-            txn.executeSql('select *from levelRatings', [], (tx, results) => {
+            txn.executeSql(`select *from ${getTableByMode()}`, [], (tx, results) => {
                 let array = [];
                 const rows = results.rows;
                 for (let i = 0; i < rows.length; i++) {
@@ -39,9 +43,9 @@ const insertRating = async (p) => {
     let db = dbConnections();
     return new Promise((resolve, reject) => {
         db.transaction((txn) => {
-            txn.executeSql('update levelRatings set stars=?, isComplete=?, isUnlocked=? where level=? ', [p.star, 1, 1, p.level], (tx, results) => {
-                txn.executeSql('update levelRatings set isUnlocked=? where level=?', [1, p.level+1], (tx, results) => {
-                    txn.executeSql('select *from levelRatings', [], (tx, results) => {
+            txn.executeSql(`update ${getTableByMode()} set stars=?, isComplete=?, isUnlocked=? where level=? `, [p.star, 1, 1, p.level], (tx, results) => {
+                txn.executeSql(`update ${getTableByMode()} set isUnlocked=? where level=?`, [1, p.level+1], (tx, results) => {
+                    txn.executeSql(`select *from ${getTableByMode()}`, [], (tx, results) => {
                         let array = [];
                         const rows = results.rows;
                         for (let i = 0; i < rows.length; i++) {
@@ -60,7 +64,7 @@ const unlockNextLevel = async (p) => {
     let db = dbConnections();
     return new Promise((resolve, reject) => {
         db.transaction((txn) => {
-            txn.executeSql('update levelRatings set isUnlocked=? where level=?', [1, p.level+1], (tx, results) => {
+            txn.executeSql(`update ${getTableByMode()} set isUnlocked=? where level=?`, [1, p.level+1], (tx, results) => {
                 resolve(true);
             }, (error) => console.log(error))
         });

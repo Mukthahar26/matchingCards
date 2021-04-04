@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import { getGameTime, getNoOfCards} from './../../../util/common'
+import { getEasyLevelGameTime} from './../../../util/common'
 
 
 export class Winner extends Component {
@@ -73,8 +73,8 @@ export class Winner extends Component {
             <Icon name="reload1" size={wp("5%")} color="#FFF" />
           </TouchableOpacity>
               {star ? <TouchableOpacity style={styles.button} onPress={()=>{
-                let cards = getGameTime(level+1);
-                let time = getNoOfCards(level+1);
+                let cards = getEasyLevelGameTime(level+1);
+                let time = getEasyLevelNoOfCards(level+1);
                 this.props.navigation.navigate('game',{level: level+1, cards,time})
                 }}>
               <Entypo name="chevron-small-right" size={wp("5%")} color="#FFF" />

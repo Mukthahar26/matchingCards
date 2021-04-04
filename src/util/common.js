@@ -1,14 +1,47 @@
-export const getNoOfCards=(level)=>{
+//============================== Easy ============================
+export const getEasyLevelNoOfCards=(level)=>{
     let cards = 10;
     if(level>10 && level<=20) cards = 15
+    if(level>20 && level<=30) cards = 15
+    return cards;
+}
+
+export const getEasyLevelGameTime=(level)=>{
+    let time = 120;
+    if(level>10 && level<=20) time = 160
+    if(level>20 && level<=30) time=160
+    return time;
+}
+
+
+//============================== Normal ============================
+export const getNormalLevelNoOfCards=(level)=>{
+    let cards = 15;
+    if(level>10 && level<=20) cards = 20
     if(level>20 && level<=30) cards = 20
     return cards;
 }
 
-export const getGameTime=(level)=>{
+export const getNormalLevelGameTime=(level)=>{
     let time = 120;
     if(level>10 && level<=20) time = 160
-    if(level>20 && level<=30) time=200
+    if(level>20 && level<=30) time=160
+    return time;
+}
+
+//============================== Hard ============================
+export const getHardLevelNoOfCards=(level)=>{
+    let cards = 20;
+    if(level>10 && level<=20) cards = 30
+    if(level>20 && level<=30) cards = 30
+    return cards;
+}
+
+
+export const getHardLevelGameTime=(level)=>{
+    let time = 140;
+    if(level>10 && level<=20) time = 170
+    if(level>20 && level<=30) time=170
     return time;
 }
 

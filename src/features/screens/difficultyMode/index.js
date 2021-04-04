@@ -3,7 +3,7 @@ import { Text, View, Appearance, StyleSheet, TouchableOpacity, TouchableHighligh
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as Animatable from 'react-native-animatable';
-import global from './../../../global'
+//import global from './../../../global'
 const colorScheme = Appearance.getColorScheme();
 
 
@@ -41,11 +41,12 @@ export class DifficultyMode extends Component {
     }
 
     goToLevel=async(mode)=>{
+        global.difficultyMode = mode
         if(mode===EASY) this.setState({easyAnimation: "bounceIn"});
-        if(mode===NORMAL) this.setState({normalAnimation: "bounceIn"});
-        if(mode===HARD) this.setState({hardAnimation: "bounceIn"});
-        if(mode===VERYHARD) this.setState({veryHardAnimation: "bounceIn"});
-        
+        else if(mode===NORMAL) this.setState({normalAnimation: "bounceIn"});
+        else if(mode===HARD) this.setState({hardAnimation: "bounceIn"});
+        else if(mode===VERYHARD) this.setState({veryHardAnimation: "bounceIn"});
+        console.log("qqqqqqqqqqqqqqqqqqq :", global.difficultyMode, mode)
         setTimeout(()=> this.props.navigation.navigate('levels',{mode}),400)
         
     }
@@ -70,11 +71,11 @@ export class DifficultyMode extends Component {
                         <Text style={styles.btnText}>Hard</Text>
                     </Animatable.View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.goToLevel(VERYHARD) }>
+                {/* <TouchableOpacity style={{width:'80%'}}  onPress={()=> this.goToLevel(VERYHARD) }>
                     <Animatable.View animation={veryHardAnimation} style={styles.button}>
                         <Text style={styles.btnText}>Very Hard</Text>
-                    </Animatable.View>    
-                </TouchableOpacity>
+                    </Animatable.View>
+                </TouchableOpacity> */}
             </LinearGradient>
         )
     }

@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, AsyncStorage } from 'react-native'
 
-export class AsyncStorage extends Component {
-    render() {
-        return (
-            <View>
-                <Text> textInComponent </Text>
-            </View>
-        )
-    }
+
+export const SOUND= "SOUND"
+export const VIBRATE= "VIBRATE"
+
+
+export const set=(key, value)=>{
+ try{
+    AsyncStorage.setItem(key, value)
+ }catch(e){
+    console.log(e)
+ }
 }
 
-export default AsyncStorage
+export const get=async(key)=>{
+    try {
+        const jsonValue = await AsyncStorage.getItem('@key')
+        return jsonValue != null ? JSON.parse(jsonValue) : null
+      } catch(e) {
+        console.log(e)
+      }
+}

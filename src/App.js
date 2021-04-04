@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { DifficultyMode, Levels, Game, Winner } from './features/screens'
-import './global'
+
 
 const Stack = createStackNavigator();
 

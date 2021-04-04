@@ -21,13 +21,12 @@ export class Levels extends Component {
 
     componentDidMount(){
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            let { mode } = this.props.route.params
-            this.getData(mode);
+            this.getData();
             this.setState((prev)=>{ return{ reload: !prev.reload }});
         });
     }
 
-    getData=async(mode)=>{
+    getData=async()=>{
         let rows = await getRatings();
         this.setState({ data: rows})
     }
