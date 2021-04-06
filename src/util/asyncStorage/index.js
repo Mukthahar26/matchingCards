@@ -8,7 +8,7 @@ export const VIBRATE= "VIBRATE"
 
 export const set=(key, value)=>{
  try{
-    AsyncStorage.setItem(key, value)
+    AsyncStorage.setItem(key, value+"")
  }catch(e){
     console.log(e)
  }
@@ -16,8 +16,9 @@ export const set=(key, value)=>{
 
 export const get=async(key)=>{
     try {
-        const jsonValue = await AsyncStorage.getItem('@key')
-        return jsonValue != null ? JSON.parse(jsonValue) : null
+        const jsonValue = await AsyncStorage.getItem(key);
+        console.log("rrrrrrrrrrrrrr :", jsonValue, typeof jsonValue)
+        return jsonValue;
       } catch(e) {
         console.log(e)
       }

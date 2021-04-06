@@ -1,3 +1,6 @@
+import { Vibration } from 'react-native'
+import Sound from 'react-native-sound';
+
 //============================== Easy ============================
 export const getEasyLevelNoOfCards=(level)=>{
     let cards = 10;
@@ -43,6 +46,15 @@ export const getHardLevelGameTime=(level)=>{
     if(level>10 && level<=20) time = 170
     if(level>20 && level<=30) time=170
     return time;
+}
+
+
+export const vibrate=()=>{
+    if(global.isVibrationOn) Vibration.vibrate(50,1000,50)
+}
+
+export const clickSound=()=>{
+    
 }
 
 

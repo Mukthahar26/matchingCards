@@ -1,6 +1,6 @@
 export const IMAGES = ()=>{
     let arr = []
-    for(let i=1;i<=35;i++){
+    for(let i=1;i<=40;i++){
         arr.push({id: i, image: "a"+i, isMatched: false, isOpen:false });
     }
     return arr;

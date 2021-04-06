@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image, Vibration, BackHandler, Alert } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image, BackHandler, Alert } from 'react-native'
 import { Settings } from './../../Screencomponents'
 import Icon from 'react-native-vector-icons/Feather';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { IMAGES, shuffle } from './../../../util/imagesList'
-import { insertRating, unlockNextLevel } from './../../../dbOperations'
-
+import { insertRating } from './../../../dbOperations'
+import { vibrate, clickSound } from './../../../util/common'
 const TIME = 120
 export class Game extends Component {
     constructor(props){
@@ -85,8 +85,8 @@ export class Game extends Component {
         let { flippedId, gameImages, lastClickedIndex, matchingCount, timer, minutes, seconds } = this.state;
         let { level, cards } = this.props.route.params
         let temp = [...gameImages];
-        console.log("oooooooooooooooooooo :",global.difficultyMode)
-        Vibration.vibrate(50,500,50)
+        console.log("oooooooooooo :", global.isVibrationOn)
+        vibrate();
         if(!temp[index].isOpen){
             temp[index].isOpen = true
             if(flippedId!==-1 && lastClickedIndex!==index){
@@ -129,7 +129,7 @@ export class Game extends Component {
     
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
-                <Settings isVisible = {isSettingsVisible} onClose={()=> this.setState((prev)=> { return{ isSettingsVisible: !prev.isSettingsVisible}}) } />
+                {isSettingsVisible ? <Settings isVisible = {isSettingsVisible} onClose={()=> this.setState((prev)=> { return{ isSettingsVisible: !prev.isSettingsVisible}}) } /> : null}
                 
                 <View style={{flex:10}}>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
@@ -168,38 +168,19 @@ const styles= StyleSheet.create({
         flex:1,
         padding:wp("3%")
     },
-    cardContainer:{
-        flex:1
-    },
     cardbtn:{
         flex: 1,
-        alignItems:'center'
+        alignItems:'center',
+        marginLeft: wp("0.5"),
+        marginRight: wp("0.5")
     },
     image:{
         height: hp("9%"),
-        width: hp("9%")
-    },
-    face:{
-        backgroundColor:'red'
-    },
-    back:{
-        backgroundColor:'yellow'
+        width: hp("9%"),
     },
     text:{
         fontSize: wp("4%"),
         fontWeight:'bold'
-    },
-    imageFlip:{
-        width: 50,
-        height:50
-    },
-    imagecontainer:{
-        flex:1,
-        
-        margin: wp("2%"),
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: wp("1%")
     }
 })
 

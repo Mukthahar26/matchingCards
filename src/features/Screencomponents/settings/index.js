@@ -4,6 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import LinearGradient from 'react-native-linear-gradient';
 import { GradientSwitch, DarkModeSwitch } from './../../../UIcomponents'
 import * as Animatable from 'react-native-animatable';
+import { set, VIBRATE } from './../../../util/asyncStorage'
 
 
 export class Settings extends Component {
@@ -11,9 +12,17 @@ export class Settings extends Component {
   constructor(props){
     super(props);
     this.state={
-      isSoundOn: true,
-      isDarkOn: true
+      isSoundOn: false,
+      isVibratinOn: false,
+      isDarkOn: false
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+      isSoundOn: global.isMusicOn,
+      isVibratinOn: global.isVibrationOn
+    })
   }
 
 
@@ -33,8 +42,14 @@ export class Settings extends Component {
     })
   }
 
+  changeVibration=()=>{
+    set(VIBRATE, !global.isVibrationOn);
+    global.isVibrationOn = !global.isVibrationOn
+    this.setState((prev)=>{ return {isVibratinOn: !prev.isVibratinOn}})
+  }
+
   render() {
-    let { isSoundOn, isDarkOn } = this.state;
+    let { isSoundOn, isDarkOn, isVibratinOn } = this.state;
     let { isVisible, onClose } = this.props;
     return (
       <Modal
@@ -59,15 +74,15 @@ export class Settings extends Component {
             fontSize={wp("2%")}
             activeGradientColors={["#38ef7d", "#11998e"]}
             inActiveGradientColors={["#777", "#434343"]}
-          />  
+          />
             </TouchableOpacity>
             </View>
             <View style={styles.row}>
               <Text style={styles.text}>Vibration</Text>
-              <TouchableOpacity activeOpacity={1} onPress={()=> this.change()}>
+              <TouchableOpacity activeOpacity={1} onPress={()=> this.changeVibration()}>
             <GradientSwitch
             size={wp("12%")}
-            value={true}
+            value={isVibratinOn}
             onChange={() =>{}}
             animationSpeed={"fast"}
             elevation={10}
