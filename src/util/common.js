@@ -53,9 +53,6 @@ export const vibrate=()=>{
     if(global.isVibrationOn) Vibration.vibrate(50,1000,50)
 }
 
-export const clickSound=()=>{
-    
-}
 
 
 // insert into hardModeLevels values(1,0,0,1);

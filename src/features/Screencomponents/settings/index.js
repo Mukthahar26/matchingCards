@@ -62,22 +62,6 @@ export class Settings extends Component {
           <LinearGradient colors={['#e2d1c3', '#e2d1c3', '#e2d1c3']} style={styles.subView}>
             <Text style={[styles.text,{alignSelf: 'center', fontSize: wp("5%"), marginBottom: hp("1.5%")}]}>Settings</Text>
             <View style={styles.row}>
-              <Text style={styles.text}>Sound</Text>
-              <TouchableOpacity activeOpacity={1} onPress={()=> this.onSoundChange()}>
-            <GradientSwitch
-            size={wp("12%")}
-            value={isSoundOn}
-            onChange={() => {}}
-            animationSpeed={"fast"}
-            elevation={10}
-            knobColor={"white"}
-            fontSize={wp("2%")}
-            activeGradientColors={["#38ef7d", "#11998e"]}
-            inActiveGradientColors={["#777", "#434343"]}
-          />
-            </TouchableOpacity>
-            </View>
-            <View style={styles.row}>
               <Text style={styles.text}>Vibration</Text>
               <TouchableOpacity activeOpacity={1} onPress={()=> this.changeVibration()}>
             <GradientSwitch
@@ -91,23 +75,6 @@ export class Settings extends Component {
             activeGradientColors={["#38ef7d", "#11998e"]}
             inActiveGradientColors={["#777", "#434343"]}
           />  
-            </TouchableOpacity>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.text}>Dark Mode</Text>
-              <TouchableOpacity activeOpacity={1} onPress={()=> this.onDarkModeChange()}>
-              <GradientSwitch
-            size={wp("12%")}
-            value={isDarkOn}
-            onChange={() =>{}}
-            animationSpeed={"fast"}
-            elevation={10}
-            knobColor={"#dcdde0"}
-            knobColor={"white"}
-            fontSize={wp("2%")}
-            activeGradientColors={["#000", "#000"]}
-            inActiveGradientColors={["#c0c0c2", "#c0c0c2"]}
-          /> 
             </TouchableOpacity>
             </View>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">

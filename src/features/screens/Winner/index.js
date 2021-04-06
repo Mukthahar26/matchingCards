@@ -29,7 +29,7 @@ export class Winner extends Component {
   
 
     render() {
-      let { level, matchingCount, time, star } = this.props.route.params
+      let { level, matchingCount, time, star, cards } = this.props.route.params
       let { count } =this.state;
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.centeredView}>
@@ -62,7 +62,7 @@ export class Winner extends Component {
             </View> : null}
             {count>=3 ? <View style={styles.row}>
               <Text style={styles.text}>Matches</Text>
-              <Text style={styles.text}>{matchingCount+"/"+matchingCount}</Text>
+              <Text style={styles.text}>{matchingCount+"/"+cards}</Text>
             </View> : null}
             </View>
             {count>=4 ? <Animatable.View style={{width: '60%', alignItems:'center', flexDirection:'row', justifyContent: 'space-between'}} animation="rubberBand" easing="ease-out" iterationCount="1">

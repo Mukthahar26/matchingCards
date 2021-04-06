@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Easing, Image, requireNativeC
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getEasyLevelGameTime, getEasyLevelNoOfCards, getHardLevelGameTime, getHardLevelNoOfCards, getNormalLevelGameTime, getNormalLevelNoOfCards} from './../../../util/common'
 import StarRating from 'react-native-star-rating';
-import { vibrate, clickSound } from './../../../util/common'
+import { vibrate } from './../../../util/common'
 export class LevelCard extends Component {
 
     gotoGame=()=>{
@@ -25,7 +25,6 @@ export class LevelCard extends Component {
             cards = getHardLevelNoOfCards(level);
         }
         vibrate();
-        clickSound();
         isUnlocked && navigation.navigate("game",{level, cards, time})
     }
 

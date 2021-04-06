@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as Animatable from 'react-native-animatable';
 import { get, VIBRATE, SOUND } from '../../../util/asyncStorage';
-import { vibrate, clickSound } from './../../../util/common'
+import { vibrate } from './../../../util/common'
 const colorScheme = Appearance.getColorScheme();
 
 
@@ -52,7 +52,6 @@ export class DifficultyMode extends Component {
     goToLevel=async(mode)=>{
         global.difficultyMode = mode
         vibrate();
-        clickSound();
         if(mode===EASY) this.setState({easyAnimation: "bounceIn"});
         else if(mode===NORMAL) this.setState({normalAnimation: "bounceIn"});
         else if(mode===HARD) this.setState({hardAnimation: "bounceIn"});

@@ -6,7 +6,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import LinearGradient from 'react-native-linear-gradient';
 import { IMAGES, shuffle } from './../../../util/imagesList'
 import { insertRating } from './../../../dbOperations'
-import { vibrate, clickSound } from './../../../util/common'
+import { vibrate } from './../../../util/common'
 const TIME = 120
 export class Game extends Component {
     constructor(props){
@@ -96,7 +96,7 @@ export class Game extends Component {
                             let star = Math.floor(TIME/(TIME-timer));
                             insertRating({star, level})
                             clearInterval(this.timer)
-                            this.props.navigation.navigate('winner',{level, star, matchingCount: this.state.matchingCount, time: TIME-timer })
+                            this.props.navigation.navigate('winner',{level, star, cards, matchingCount: this.state.matchingCount, time: TIME-timer })
                             
                             this.setState({
                                 timer:TIME,
@@ -150,9 +150,9 @@ export class Game extends Component {
                     <FlatList
                         data={gameImages}
                         numColumns={5}
-                        columnWrapperStyle={{flex:1, justifyContent:'center', marginBottom:wp("1.5%")}}
-                        renderItem={({item, index})=>
-                        !item.isOpen ? <TouchableOpacity style={styles.cardbtn} activeOpacity={1} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="contain" source={require("./../../../assets/heartcard.jpg")} /></TouchableOpacity> : <TouchableOpacity activeOpacity={1} style={{...styles.cardbtn, backgroundColor:'white'}} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="center" source={{uri: item.image}} /></TouchableOpacity>
+                        columnWrapperStyle={{flex:1, justifyContent:'center', marginBottom:wp("1%")}}
+                        renderItem={({item, index})=> 
+                        !item.isOpen ? <TouchableOpacity style={styles.cardbtn} activeOpacity={1} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="contain" source={require("./../../../assets/starCard.jpg")} /></TouchableOpacity> : <TouchableOpacity activeOpacity={1} style={{...styles.cardbtn, backgroundColor:'white'}} onPress={()=> this.flipped(item.id, index)}><Image style={styles.image} resizeMode="center" source={{uri: item.image}} /></TouchableOpacity>
                     }
                         keyExtractor={(item,index)=> index.toString()}
                     />
