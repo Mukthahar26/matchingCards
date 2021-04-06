@@ -21,13 +21,13 @@ export class Game extends Component {
             lastClickedIndex: -1,
             matchingCount: 0,
             isSettingsVisible: false,
-            openCloseBox : false,
-            isWinnerVisible: true
+            openCloseBox : false
         }
         this.childRef= []
     }
 
     componentDidMount(){
+        // this.props.navigation.navigate('winner',{level:3, star:3, cards:10, matchingCount: 10, time: 170 })
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
             this.setState({
@@ -39,8 +39,7 @@ export class Game extends Component {
                 lastClickedIndex: -1,
                 matchingCount: 0,
                 isSettingsVisible: false,
-                openCloseBox: false,
-                isWinnerVisible: true
+                openCloseBox: false
             })
             let cards = this.props.route.params.cards
             let arr = shuffle(IMAGES());
@@ -103,8 +102,7 @@ export class Game extends Component {
                                 lastClickedIndex: -1,
                                 matchingCount: 0,
                                 isSettingsVisible: false,
-                                openCloseBox:false,
-                                isWinnerVisible: true
+                                openCloseBox:false
                             })
                         }
                     })
@@ -120,7 +118,7 @@ export class Game extends Component {
     }
 
     render() {
-        let { timer, gameImages, matchingCount, isSettingsVisible, openCloseBox, isWinnerVisible, minutes, seconds } = this.state;
+        let { timer, gameImages, matchingCount, isSettingsVisible, openCloseBox, minutes, seconds } = this.state;
         let {level, cards} = this.props.route.params
 
         return (

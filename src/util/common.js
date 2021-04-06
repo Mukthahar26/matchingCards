@@ -1,5 +1,4 @@
 import { Vibration } from 'react-native'
-import Sound from 'react-native-sound';
 
 //============================== Easy ============================
 export const getEasyLevelNoOfCards=(level)=>{
