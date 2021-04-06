@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image, BackHandler, Alert } from 'react-native'
 import { Settings } from './../../Screencomponents'
+import { DialogueBox } from './../../../UIcomponents'
 import Icon from 'react-native-vector-icons/Feather';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,6 +21,7 @@ export class Game extends Component {
             lastClickedIndex: -1,
             matchingCount: 0,
             isSettingsVisible: false,
+            openCloseBox : false,
             isWinnerVisible: true
         }
         this.childRef= []
@@ -37,6 +39,7 @@ export class Game extends Component {
                 lastClickedIndex: -1,
                 matchingCount: 0,
                 isSettingsVisible: false,
+                openCloseBox: false,
                 isWinnerVisible: true
             })
             let cards = this.props.route.params.cards
@@ -69,14 +72,7 @@ export class Game extends Component {
     }
 
     backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to exit from the game?", [
-          {
-            text: "No",
-            onPress: () => null,
-            style: "No"
-          },
-          { text: "YES", onPress: () => this.props.navigation.goBack(null) }
-        ]);
+        this.setState({ openCloseBox: true})
         return true;
       };
     
@@ -107,6 +103,7 @@ export class Game extends Component {
                                 lastClickedIndex: -1,
                                 matchingCount: 0,
                                 isSettingsVisible: false,
+                                openCloseBox:false,
                                 isWinnerVisible: true
                             })
                         }
@@ -123,14 +120,13 @@ export class Game extends Component {
     }
 
     render() {
-        let { timer, gameImages, matchingCount, isSettingsVisible, isWinnerVisible, minutes, seconds } = this.state;
+        let { timer, gameImages, matchingCount, isSettingsVisible, openCloseBox, isWinnerVisible, minutes, seconds } = this.state;
         let {level, cards} = this.props.route.params
-        console.log("gameImages ", isSettingsVisible, isWinnerVisible, matchingCount, level)
-    
+
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
                 {isSettingsVisible ? <Settings isVisible = {isSettingsVisible} onClose={()=> this.setState((prev)=> { return{ isSettingsVisible: !prev.isSettingsVisible}}) } /> : null}
-                
+                <DialogueBox title={"Hold On!"} message={"Are you sure you want to exit from the game?"} isVisible={openCloseBox} no={()=> this.setState({ openCloseBox : !openCloseBox})} yes={()=>this.props.navigation.goBack(null)} />
                 <View style={{flex:10}}>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <Text style={styles.text}>Level: {level}</Text>
