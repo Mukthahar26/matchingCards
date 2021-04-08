@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View, ActivityIndicator, StyleSheet, Modal } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 export class Loading extends Component {
     render() {
-        let { isVisible, onClose } = this.props;
+        let { isVisible= true, onClose } = this.props;
         return (
-            <Modal
-          animationType="fade"
-          transparent={true}
-          visible={isVisible}
-          onRequestClose={() => { }}
-        >
-            <View style={styles.container} style={styles.centeredView}>
-                <ActivityIndicator size={wp("15%")} color={"red"} />
+            <View style={styles.centeredView}>
+                <Text style={styles.text}>Loading...</Text>
             </View>
-        </Modal>
         )
     }
 }
@@ -27,7 +20,12 @@ const styles= StyleSheet.create({
         flex: 1,
         justifyContent:'center',
         alignItems: "center",
-        backgroundColor: 'rgba(0,0,0,0.7)'
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    text:{
+        fontSize:wp("7%"),
+        color: 'white',
+        fontWeight: 'bold'
     }
 });
 

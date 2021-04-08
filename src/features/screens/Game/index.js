@@ -53,10 +53,10 @@ export class Game extends Component {
     }
 
     setTimer=()=>{
-        let { level, time } = this.props.route.params
+        let { level, time, cards } = this.props.route.params
         this.timer = setInterval(()=> {
             if(this.state.timer===0){
-                this.props.navigation.navigate('winner',{level, star:0, matchingCount: this.state.matchingCount, time })
+                this.props.navigation.navigate('winner',{level, star:0, cards, matchingCount: this.state.matchingCount, time })
                 clearInterval(this.timer)
             }
             var minutes = Math.floor(this.state.timer / 60);

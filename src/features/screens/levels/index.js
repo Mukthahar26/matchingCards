@@ -40,12 +40,13 @@ export class Levels extends Component {
         
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
-                {data.length ? <FlatList
+                  {!data.length ? <Loading /> : <View style={{flex:1, padding: wp("4%")}}>
+                    <FlatList
                     data={data}
                     numColumns={4}
                     renderItem={({item, index})=> <LevelCard {...item } { ...this.props } />}
                     keyExtractor={(item, index)=> index.toString()}
-                /> : <Loading isVisible={true} />}
+                /></View>} 
             </LinearGradient>
         )
     }
@@ -54,8 +55,7 @@ export class Levels extends Component {
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        padding: wp("4%")
+        flex:1
     }
 })
 

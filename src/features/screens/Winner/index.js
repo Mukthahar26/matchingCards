@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, Modal, StyleSheet, Easing, TouchableOpacity } from 'react-native'
+import { Text, View, Modal, StyleSheet, Easing, TouchableOpacity, BackHandler } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import { getEasyLevelGameTime } from './../../../util/common'
+import { getEasyLevelGameTime, getEasyLevelNoOfCards } from './../../../util/common'
 import StarRating from 'react-native-star-rating';
 
 export class Winner extends Component {
@@ -19,11 +19,20 @@ export class Winner extends Component {
   }
 
   componentDidMount(){
+    BackHandler.addEventListener("hardwareBackPress", this.backAction);
     this.setInterval =setInterval(()=>{
       if(this.state.count===4) clearInterval(this.setInterval)
       this.setState((prev)=>{ return {count: prev.count+1} })
     },1200)
   }
+
+  backAction = () => {
+    return true;
+  };
+
+  componentWillUnmount(){
+    BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+}
 
   
 
@@ -53,7 +62,7 @@ export class Winner extends Component {
             </View> : null}
             {count>=2 ?<View style={styles.row}>
               <Text style={styles.text}>Stars</Text>
-              <Text style={styles.text}>{star}</Text>
+              <Text style={styles.text}>{star>3 ? "3" : star}</Text>
             </View> : null}
             {count>=3 ? <View style={styles.row}>
               <Text style={styles.text}>Matches</Text>
@@ -68,8 +77,8 @@ export class Winner extends Component {
             <Icon name="reload1" size={wp("5%")} color="#FFF" />
           </TouchableOpacity>
               {star ? <TouchableOpacity style={styles.button} onPress={()=>{
-                let cards = getEasyLevelGameTime(level+1);
-                let time = getEasyLevelNoOfCards(level+1);
+                let time = getEasyLevelGameTime(level+1);
+                let cards = getEasyLevelNoOfCards(level+1);
                 this.props.navigation.navigate('game',{level: level+1, cards,time})
                 }}>
               <Entypo name="chevron-small-right" size={wp("5%")} color="#FFF" />
