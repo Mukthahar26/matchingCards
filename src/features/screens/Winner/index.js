@@ -43,7 +43,7 @@ export class Winner extends Component {
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.centeredView}>
               { star ? <Animatable.Text animation="rubberBand" easing="ease-out" iterationCount="3" style={[styles.text,styles.winLabel]}>Congratulations</Animatable.Text> 
-              : <Text style={[styles.text,styles.winLabel,{color: 'red'}]}>Sorry, you loss</Text>}
+              : <Text style={[styles.text,styles.winLabel,{color: 'red'}]}>Sorry, you lost the game</Text>}
               <View style={styles.rowContainer}>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
             <StarRating
@@ -86,9 +86,8 @@ export class Winner extends Component {
           </TouchableOpacity> : null}
           </Animatable.View> : null} 
           <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', }}>
-                    <Text style={{fontSize:wp("2%")}}>Advertisement</Text>
                     <AdMobBanner
-                        adSize="largeBanner"
+                        adSize="smallBanner"
                         adUnitID="ca-app-pub-8742395058484025/1791921565"
                         // adUnitID="ca-app-pub-3940256099942544/6300978111"
                         // testDeviceID="CF583E54-34C6-453C-80FC-493D2468A51E"
@@ -102,46 +101,35 @@ export class Winner extends Component {
 const styles= StyleSheet.create({
     centeredView: {
         flex: 1,
-        paddingTop: hp("25%"),
+        paddingTop: hp("15%"),
         alignItems: "center",
         backgroundColor: '#27282b'
-      },
-      starRowStyle:{
-        flexDirection:'row'
-      },
-      starSizeStyle:{
-        width:wp("15%"),
-        height:wp("15%")
-      },
-      subView:{
-        backgroundColor: 'white',
-        width: '85%',
-        borderRadius: wp("1%")
       },
       rowContainer:{
         backgroundColor: 'rgba(0,0,0,0.9)', 
         width:'70%',
         elevation: 10,
         alignItems:'center',
-        height: hp("30%"),
+        height: hp("36%"),
         borderRadius: wp("2%"),
-        marginTop: wp("3%"),
-        paddingTop: wp("4%")
+        marginTop: hp("1%"),
+        paddingTop: hp("3%")
       },
       row:{
         width:'65%',
         flexDirection:'row',
         justifyContent:'space-between',
-        marginTop: wp("6%")
-      },
-      text:{
-        color: 'white'
+        marginTop: hp("3%")
+      }, 
+      text:{ 
+        color: 'white',
+        fontSize: wp("3.8%")
       },
       winLabel:{
         fontSize: wp("7%"),
         fontWeight:'bold',
         color: '#697fc9',
-        marginBottom: wp("4%")
+        marginBottom: hp("1%")
       },
       button:{
         width: hp("6%"),

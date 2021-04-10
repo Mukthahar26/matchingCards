@@ -128,15 +128,16 @@ export class Game extends Component {
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
                 {isSettingsVisible ? <Settings isVisible = {isSettingsVisible} onClose={()=> this.setState((prev)=> { return{ isSettingsVisible: !prev.isSettingsVisible}}) } /> : null}
                 <DialogueBox title={"Hold On!"} message={"Are you sure you want to exit from the game?"} isVisible={openCloseBox} no={()=> this.setState({ openCloseBox : !openCloseBox})} yes={()=>this.props.navigation.goBack(null)} />
-                <View style={{flex:10, alignItems:'center'}}>
+                <View style={{ height: wp("20%"),alignItems:'center'}}>
                     <Text style={{fontSize:wp("2%")}}>Advertisement</Text>
                     <AdMobBanner
                         adSize="smallBanner"
                         adUnitID="ca-app-pub-8742395058484025/5879340388"
+                        //adUnitID="ca-app-pub-3940256099942544/6300978111"
                         //testDeviceID="CF583E54-34C6-453C-80FC-493D2468A51E"
                     />
                 </View>
-                <View style={{flex:10}}>
+                <View style={{ marginBottom: wp("3%")}}>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <Text style={styles.text}>Level: {level}</Text>
                         <View style={{flexDirection:'row', marginLeft: wp("-14%"), alignItems:'center'}}>
@@ -148,7 +149,7 @@ export class Game extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={{marginTop: hp("2%"), fontWeight: 'bold'}}>Matches: {matchingCount+"/"+cards}</Text>
+                        <Text style={{marginTop: hp("1%"), fontWeight: 'bold'}}>Matches: {matchingCount+"/"+cards}</Text>
                     </View>
                 </View>
                 <View style={{flex:80}}>

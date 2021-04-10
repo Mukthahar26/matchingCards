@@ -21,7 +21,7 @@ export class LevelCard extends Component {
         return (
             <TouchableOpacity onPress={()=> this.gotoGame()} activeOpacity={0.8} style={styles.container}>
                 <View style={styles.circle}>
-                    { isUnlocked ? <Text style={styles.levelNumber}>{level}</Text> : <Image resizeMode="contain" source={require("./../../../assets/yellowlock.png")} />}
+                    { isUnlocked ? <Text style={styles.levelNumber}>{level}</Text> : <Image style={styles.image} resizeMode="contain" source={require("./../../../assets/yellowlock.png")} />}
                     
                 </View>
             <View style={styles.starRating}>
@@ -45,6 +45,8 @@ const styles=StyleSheet.create({
         backgroundColor: '#263952',
         margin: wp("2%"),
         padding:wp("1%"),
+        paddingTop: wp("2%"),
+        paddingBottom: wp("2%"),
         justifyContent:'center',
         alignItems:'center',
         borderRadius: wp("1%")
@@ -64,9 +66,11 @@ const styles=StyleSheet.create({
         color: 'white',
         fontWeight:'bold'
     },
+    image:{
+        width:wp("5%")
+    },
     starRating:{
-        marginTop: wp("2.5%"),
-        marginBottom: wp("2%")
+        marginTop: hp("2%")
     },
     stars:{
         
