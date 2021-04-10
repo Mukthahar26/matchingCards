@@ -7,8 +7,9 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import LinearGradient from 'react-native-linear-gradient';
 import { IMAGES, shuffle } from './../../../util/imagesList'
 import { insertRating } from './../../../dbOperations'
-import { vibrate } from './../../../util/common'
-const TIME = 120
+import { vibrate, noOfStarByTime } from './../../../util/common'
+
+
 export class Game extends Component {
     constructor(props){
         super(props);
@@ -78,7 +79,7 @@ export class Game extends Component {
 
     flipped=(id, index)=>{
         let { flippedId, gameImages, lastClickedIndex, matchingCount, timer, minutes, seconds } = this.state;
-        let { level, cards } = this.props.route.params
+        let { level, cards, time } = this.props.route.params
         let temp = [...gameImages];
         console.log("oooooooooooo :", global.isVibrationOn)
         vibrate();
@@ -88,13 +89,14 @@ export class Game extends Component {
                 if(flippedId===id){
                     this.setState({ matchingCount: matchingCount+1, flippedId: -1, lastClickedIndex: -1, gameImages: temp },()=>{
                         if(this.state.matchingCount===cards){
-                            let star = Math.floor(TIME/(TIME-timer));
+                            let star = noOfStarByTime(time, time-timer)
+                            console.log("tttttttttttttt :", time, timer, time-timer, star)
                             insertRating({star, level})
                             clearInterval(this.timer)
-                            this.props.navigation.navigate('winner',{level, star, cards, matchingCount: this.state.matchingCount, time: TIME-timer })
+                            this.props.navigation.navigate('winner',{level, star, cards, matchingCount: this.state.matchingCount, time: time-timer })
                             
                             this.setState({
-                                timer:TIME,
+                                timer:time,
                                 minutes: 0,
                                 seconds: 0,
                                 flippedId: -1,

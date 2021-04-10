@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Easing, Image, requireNativeComponent } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { getEasyLevelGameTime, getEasyLevelNoOfCards, getHardLevelGameTime, getHardLevelNoOfCards, getNormalLevelGameTime, getNormalLevelNoOfCards} from './../../../util/common'
+import { getLevelGameTime, getLevelNoOfCards } from './../../../util/common'
 import StarRating from 'react-native-star-rating';
 import { vibrate } from './../../../util/common'
 export class LevelCard extends Component {
@@ -10,20 +10,8 @@ export class LevelCard extends Component {
         let { level, isUnlocked, navigation} = this.props;
         let  time = 120;
         let cards = 10
-        time = getHardLevelGameTime(level);
-        cards = getHardLevelNoOfCards(level);
-        if(global.difficultyMode==="EASY"){
-            time = getEasyLevelGameTime(level);
-            cards = getEasyLevelNoOfCards(level);
-        }
-        if(global.difficultyMode==="NORMAL"){
-            time = getNormalLevelGameTime(level);
-            cards = getNormalLevelNoOfCards(level);
-        }
-        if(global.difficultyMode==="HARD"){
-            time = getHardLevelGameTime(level);
-            cards = getHardLevelNoOfCards(level);
-        }
+        time = getLevelGameTime(level);
+        cards = getLevelNoOfCards(level);
         vibrate();
         isUnlocked && navigation.navigate("game",{level, cards, time})
     }

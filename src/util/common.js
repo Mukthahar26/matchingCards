@@ -1,50 +1,55 @@
 import { Vibration } from 'react-native'
 
 //============================== Easy ============================
-export const getEasyLevelNoOfCards=(level)=>{
-    let cards = 10;
-    if(level>10 && level<=20) cards = 15
-    if(level>20 && level<=30) cards = 15
-    return cards;
-}
+export const getLevelNoOfCards=(level)=>{
 
-export const getEasyLevelGameTime=(level)=>{
-    let time = 120;
-    if(level>10 && level<=20) time = 160
-    if(level>20 && level<=30) time=160
+    if(global.difficultyMode==="EASY"){
+        let cards = 10; //complete
+        if(level>10 && level<=20) cards = 15 //complete
+        if(level>20 && level<=30) cards = 15 //complete
+        return cards;
+    }
+   else if(global.difficultyMode==="NORMAL"){
+        let cards = 15; //complete
+        if(level>10 && level<=20) cards = 20 //complete
+        if(level>20 && level<=30) cards = 20 //complete
+        return cards;
+    }
+    else if(global.difficultyMode==="HARD"){
+        let cards = 20; //complete
+        if(level>10 && level<=20) cards = 30
+        if(level>20 && level<=30) cards = 30
+        return cards;
+    }
+    
+}
+//=================================================
+export const getLevelGameTime=(level)=>{
+    if(global.difficultyMode==="EASY"){
+        let time = 120;     //complete
+        if(level>10 && level<=20) time = 160 //complete 
+        if(level>20 && level<=30) time=160 //complete
+        return time;
+    }
+   else if(global.difficultyMode==="NORMAL"){
+    let time = 160; //complete
+    if(level>10 && level<=20) time = 360   //complete
+    if(level>20 && level<=30) time=360  //complete
     return time;
+    }
+    else if(global.difficultyMode==="HARD"){
+        let time = 360; //complete 360
+        if(level>10 && level<=20) time = 600
+        if(level>20 && level<=30) time=600
+        return time;
+    }   
 }
 
-
-//============================== Normal ============================
-export const getNormalLevelNoOfCards=(level)=>{
-    let cards = 15;
-    if(level>10 && level<=20) cards = 20
-    if(level>20 && level<=30) cards = 20
-    return cards;
-}
-
-export const getNormalLevelGameTime=(level)=>{
-    let time = 120;
-    if(level>10 && level<=20) time = 160
-    if(level>20 && level<=30) time=160
-    return time;
-}
-
-//============================== Hard ============================
-export const getHardLevelNoOfCards=(level)=>{
-    let cards = 20;
-    if(level>10 && level<=20) cards = 30
-    if(level>20 && level<=30) cards = 30
-    return cards;
-}
-
-
-export const getHardLevelGameTime=(level)=>{
-    let time = 140;
-    if(level>10 && level<=20) time = 170
-    if(level>20 && level<=30) time=170
-    return time;
+export const noOfStarByTime=(totalTime, completedTime)=>{
+    let parts = Math.floor(totalTime/3);
+    if(completedTime<=parts) return 3;
+    else if(completedTime<=(parts*2)) return 2;
+    else if(completedTime<=(parts*3)) return 1;
 }
 
 
