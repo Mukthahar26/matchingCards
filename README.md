@@ -8,9 +8,9 @@ react-native bundle --entry-file index.js --platform ios --dev false --bundle-ou
 2. Edit schema and select Release
 3. Run/Archive like normal ios App
 
-cd android && gradle clean && ./gradlew assembleRelease
+cd android && ./gradlew clean && ./gradlew assembleRelease
 
-cd android && gradle clean && ./gradlew bundleRelease
+cd android && ./gradlew clean && ./gradlew bundleRelease
 
 
 

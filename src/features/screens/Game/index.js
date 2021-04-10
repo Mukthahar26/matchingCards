@@ -139,7 +139,7 @@ export class Game extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={{marginTop: hp("2%")}}>Matches: {matchingCount+"/"+cards}</Text>
+                        <Text style={{marginTop: hp("2%"), fontWeight: 'bold'}}>Matches: {matchingCount+"/"+cards}</Text>
                     </View>
                 </View>
                 <View style={{flex:90}}>
