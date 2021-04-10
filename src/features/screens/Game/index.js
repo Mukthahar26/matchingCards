@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { IMAGES, shuffle } from './../../../util/imagesList'
 import { insertRating } from './../../../dbOperations'
 import { vibrate, noOfStarByTime } from './../../../util/common'
+import {AdMobBanner} from 'react-native-admob';
 
 
 export class Game extends Component {
@@ -127,6 +128,14 @@ export class Game extends Component {
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
                 {isSettingsVisible ? <Settings isVisible = {isSettingsVisible} onClose={()=> this.setState((prev)=> { return{ isSettingsVisible: !prev.isSettingsVisible}}) } /> : null}
                 <DialogueBox title={"Hold On!"} message={"Are you sure you want to exit from the game?"} isVisible={openCloseBox} no={()=> this.setState({ openCloseBox : !openCloseBox})} yes={()=>this.props.navigation.goBack(null)} />
+                <View style={{flex:10, alignItems:'center'}}>
+                    <Text style={{fontSize:wp("2%")}}>Advertisement</Text>
+                    <AdMobBanner
+                        adSize="smallBanner"
+                        adUnitID="ca-app-pub-8742395058484025/5879340388"
+                        //testDeviceID="CF583E54-34C6-453C-80FC-493D2468A51E"
+                    />
+                </View>
                 <View style={{flex:10}}>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <Text style={styles.text}>Level: {level}</Text>
@@ -142,7 +151,7 @@ export class Game extends Component {
                         <Text style={{marginTop: hp("2%"), fontWeight: 'bold'}}>Matches: {matchingCount+"/"+cards}</Text>
                     </View>
                 </View>
-                <View style={{flex:90}}>
+                <View style={{flex:80}}>
                     <FlatList
                         data={gameImages}
                         numColumns={5}
@@ -162,7 +171,8 @@ export class Game extends Component {
 const styles= StyleSheet.create({
     container:{
         flex:1,
-        padding:wp("3%")
+        padding:wp("3%"),
+        paddingTop:0
     },
     cardbtn:{
         flex: 1,

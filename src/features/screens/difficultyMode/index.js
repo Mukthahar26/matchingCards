@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import * as Animatable from 'react-native-animatable';
 import { get, VIBRATE, SOUND } from '../../../util/asyncStorage';
 import { vibrate } from './../../../util/common'
+import {AdMobBanner} from 'react-native-admob';
 const colorScheme = Appearance.getColorScheme();
 
 
@@ -65,6 +66,7 @@ export class DifficultyMode extends Component {
         let { easyAnimation, normalAnimation, hardAnimation, veryHardAnimation } = this.state;
         return (
             <LinearGradient colors={['#fdfcfb', '#e2d1c3', '#e2d1c3']} style={styles.container}>
+                <View style={styles.buttonContainer}>
                 <Animatable.Text animation="flipInY" style={styles.title}>Difficulty Mode</Animatable.Text>
                 <TouchableOpacity style={{width:'80%'}}  onPress={()=>this.goToLevel(EASY) } >
                     <Animatable.View animation={easyAnimation} style={styles.button}>
@@ -86,7 +88,16 @@ export class DifficultyMode extends Component {
                         <Text style={styles.btnText}>Very Hard</Text>
                     </Animatable.View>
                 </TouchableOpacity> */}
+                </View>
+                <View style={{flex:15, alignItems:'center', justifyContent:'flex-end'}}>
+                <AdMobBanner
+                    adSize="largeBanner"
+                    adUnitID="ca-app-pub-8742395058484025/9670874608"
+                    //testDeviceID="CF583E54-34C6-453C-80FC-493D2468A51E"
+                />
+                </View>
             </LinearGradient>
+            
         )
     }
 }
@@ -94,12 +105,14 @@ export class DifficultyMode extends Component {
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1,
+        flex: 1
+    },
+    buttonContainer:{
+        flex:85,
         justifyContent: 'center',
         alignItems: 'center'
     },
     title:{
-        marginTop: hp("-10%"),
         marginBottom: hp("10%"),
         fontSize: wp("8%"),
         textShadowColor: 'rgba(0, 0, 0, 0.75)',

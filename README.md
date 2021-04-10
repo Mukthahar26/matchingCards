@@ -24,3 +24,31 @@ https://www.soundeffectsplus.com/product/menu-button-click-snap-08/
 
 # images downloaded from 
 https://uxwing.com/panda-icon/
+
+
+
+# admob lot of error issues solution:
+==================================
+# replace below code in this path : \node_modules\react-native-admob\android\build.gradle 
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.google.android.gms:play-services-ads:16.0.0'
+}

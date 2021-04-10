@@ -8,6 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { getLevelGameTime, getLevelNoOfCards } from './../../../util/common'
 import StarRating from 'react-native-star-rating';
+import {AdMobBanner} from 'react-native-admob';
 
 export class Winner extends Component {
 
@@ -83,8 +84,16 @@ export class Winner extends Component {
                 }}>
               <Entypo name="chevron-small-right" size={wp("5%")} color="#FFF" />
           </TouchableOpacity> : null}
-          
-            </Animatable.View> : null}
+          </Animatable.View> : null} 
+          <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', }}>
+                    <Text style={{fontSize:wp("2%")}}>Advertisement</Text>
+                    <AdMobBanner
+                        adSize="largeBanner"
+                        adUnitID="ca-app-pub-8742395058484025/1791921565"
+                        // adUnitID="ca-app-pub-3940256099942544/6300978111"
+                        // testDeviceID="CF583E54-34C6-453C-80FC-493D2468A51E"
+                    />
+                </View>
             </LinearGradient>
         )
     }

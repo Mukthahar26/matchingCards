@@ -12,6 +12,8 @@ target 'matchingCardPuzzle' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-admob', :path => '../node_modules/react-native-admob'
+
   target 'matchingCardPuzzleTests' do
     inherit! :complete
     # Pods for testing
